@@ -12,6 +12,6 @@ func (fnc ErrorLogFnc) Log(error *HttpError) {
 	fnc(error)
 }
 
-var defaultLogger = ErrorLogFnc(func(error *HttpError){
+var defaultLogger = ErrorLogFnc(func(error *HttpError) {
 	log.Printf("Error %s (status %d - description %s): %s", error.ID, error.Type.StatusCode, error.Type.Description, error.Cause)
 })

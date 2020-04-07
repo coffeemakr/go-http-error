@@ -20,10 +20,10 @@ func (w loggingErrorWriter) Write(httpError *HttpError) {
 	w.Delegate.Write(httpError)
 }
 
-func withLoggers(writer ErrorWriter, loggers... ErrorLogger) ErrorWriter {
+func withLoggers(writer ErrorWriter, loggers ...ErrorLogger) ErrorWriter {
 	return &loggingErrorWriter{
 		Delegate: writer,
-		Loggers: loggers,
+		Loggers:  loggers,
 	}
 }
 
@@ -41,16 +41,18 @@ type JSONWriter struct {
 	ResponseWriter http.ResponseWriter
 }
 
-type httpErrorDto struct {
+type JsonHttpError struct {
 	Description string `json:"description"`
 	Error       bool   `json:"error"`
 	ErrorCode   string `json:"error_code,omitempty"`
 }
 
 func (writer JSONWriter) Write(httpError *HttpError) {
-	writer.ResponseWriter.WriteHeader(httpError.Type.StatusCode)
 	writer.ResponseWriter.Header().Set("Content-Type", "application/json")
-	httpErrorDto := httpErrorDto{
+	writer.ResponseWriter.Header().Set("Content-Security-Policy", "default-src 'none'")
+
+	writer.ResponseWriter.WriteHeader(httpError.Type.StatusCode)
+	httpErrorDto := JsonHttpError{
 		Description: httpError.Type.Description,
 		Error:       true,
 		ErrorCode:   httpError.ID,

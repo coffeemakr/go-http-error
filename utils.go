@@ -2,7 +2,7 @@ package http_error
 
 import "math/rand"
 
-const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890"
+const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890_-"
 
 func RandomErrorID() string {
 	const n = 32
@@ -12,4 +12,3 @@ func RandomErrorID() string {
 	}
 	return string(b)
 }
-

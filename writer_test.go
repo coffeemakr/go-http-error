@@ -7,7 +7,6 @@ import (
 	"testing"
 )
 
-
 func TestJsonWriter(t *testing.T) {
 	var badRequestType = NewHttpErrorType(http.StatusBadRequest, "Bad request")
 	w := httptest.NewRecorder()
@@ -24,7 +23,7 @@ func TestJsonWriter(t *testing.T) {
 	if body["description"] != "Bad request" {
 		t.Fatalf("Got invalid description: %s", body["description"])
 	}
-	if body["error"] != true  {
+	if body["error"] != true {
 		t.Fatalf("Error field is not true: %s", body["true"])
 	}
 	if response.StatusCode != http.StatusBadRequest {
